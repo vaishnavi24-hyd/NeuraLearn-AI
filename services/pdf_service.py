@@ -26,6 +26,7 @@ def extract_pdf_data(file_path):
     filename = os.path.basename(file_path)
     page_count = 0
     full_text = ""
+    pages = []
     
     try:
         # Fast metadata extraction with PyPDF2
@@ -35,10 +36,11 @@ def extract_pdf_data(file_path):
             
         # Robust text extraction with pdfplumber
         with pdfplumber.open(file_path) as pdf:
-            for page in pdf.pages:
+            for i, page in enumerate(pdf.pages):
                 text = page.extract_text()
                 if text:
                     full_text += text + "\n\n"
+                    pages.append({"page_number": i + 1, "text": text})
                     
     except Exception as e:
         print(f"Error extracting PDF data from {filename}: {e}")
@@ -49,5 +51,6 @@ def extract_pdf_data(file_path):
         "path": file_path,
         "page_count": page_count,
         "text": full_text,
+        "pages": pages,
         "upload_timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
