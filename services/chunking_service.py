@@ -1,5 +1,5 @@
 import uuid
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 def process_document(doc, chunk_size=1000, chunk_overlap=200):
     """
