@@ -2,7 +2,7 @@ import streamlit as st
 from utils.styling import apply_theme
 
 # Import component modules (we will create these next)
-from components import home, upload, tutor, visuals, quiz, flashcards, analytics, chunk_viewer
+from components import home, upload, tutor, visuals, quiz, flashcards, analytics, chunk_viewer, embedding_dashboard
 
 def main():
     # Apply global theme and configuration
@@ -19,6 +19,7 @@ def main():
             "🏠 Home": home.render,
             "📂 Upload Notes": upload.render,
             "✂️ Data Chunking": chunk_viewer.render,
+            "🧠 Vector Generation": embedding_dashboard.render,
             "🤖 AI Tutor": tutor.render,
             "👁️ Visual Explanations": visuals.render,
             "📝 Quiz Generator": quiz.render,
