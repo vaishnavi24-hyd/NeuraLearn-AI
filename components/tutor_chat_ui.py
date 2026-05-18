@@ -1,5 +1,6 @@
 import streamlit as st
 from services.rag_service import generate_rag_response
+from services.analytics_service import track_question
 
 def render():
     st.markdown("<h2 class='neon-text-purple'>AI Knowledge Tutor</h2>", unsafe_allow_html=True)
@@ -119,6 +120,9 @@ def render():
 
     # Input handling
     if prompt:
+        # Track analytics
+        track_question("Tutor Chat")
+        
         # Append and display user message immediately
         st.session_state.chat_messages.append({"role": "user", "content": prompt, "citations": []})
         with chat_container:

@@ -1,6 +1,7 @@
 import streamlit as st
 import random
 from services.flashcard_service import generate_flashcards
+from services.analytics_service import track_flashcard
 
 def render():
     st.markdown("<h2 class='neon-text-purple'>Neural Flashcards</h2>", unsafe_allow_html=True)
@@ -36,6 +37,7 @@ def render():
                             st.session_state.flashcard_data = fc_data
                             st.session_state.current_fc_idx = 0
                             st.session_state.is_flipped = False
+                            st.session_state.last_fc_topic = topic
                             st.rerun()
                         else:
                             st.error("Failed to generate flashcards. The knowledge core may lack sufficient context on this topic.")
@@ -86,6 +88,9 @@ def render():
             flip_label = "Show Question" if st.session_state.is_flipped else "Show Answer"
             if st.button(f"🔄 {flip_label}", use_container_width=True, type="primary"):
                 st.session_state.is_flipped = not st.session_state.is_flipped
+                if st.session_state.is_flipped:
+                    # Track analytics only when showing the answer
+                    track_flashcard(st.session_state.get('last_fc_topic', 'General Flashcards'))
                 st.rerun()
                 
         with col3:

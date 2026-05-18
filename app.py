@@ -1,13 +1,17 @@
 import streamlit as st
 from utils.styling import apply_theme
+from services.analytics_service import init_analytics_state
 
 # Import component modules (we will create these next)
-from components import home, upload, tutor_chat_ui, diagram_ui, quiz_ui, flashcard_ui, analytics, chunk_viewer, embedding_dashboard, vector_dashboard
+from components import home, upload, tutor_chat_ui, diagram_ui, quiz_ui, flashcard_ui, analytics_dashboard, chunk_viewer, embedding_dashboard, vector_dashboard
 
 def main():
     # Apply global theme and configuration
     apply_theme()
-
+    
+    # Initialize analytics
+    init_analytics_state()
+    
     # Sidebar Navigation
     with st.sidebar:
         st.markdown("<h1 class='neon-text-cyan'>NeuroLearn AI</h1>", unsafe_allow_html=True)
@@ -25,7 +29,7 @@ def main():
             "👁️ Visual Explanations": diagram_ui.render,
             "📝 Quiz Generator": quiz_ui.render,
             "🗂️ Flashcards": flashcard_ui.render,
-            "📊 Study Analytics": analytics.render
+            "📊 Study Analytics": analytics_dashboard.render
         }
         
         selection = st.radio("Navigation", list(pages.keys()), label_visibility="collapsed")

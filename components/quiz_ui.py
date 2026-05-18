@@ -1,6 +1,7 @@
 import streamlit as st
 import time
 from services.quiz_service import generate_quiz
+from services.analytics_service import track_quiz
 
 def render():
     st.markdown("<h2 class='neon-text-cyan'>Neural Quiz Generator</h2>", unsafe_allow_html=True)
@@ -46,6 +47,7 @@ def render():
                             st.session_state.score = 0
                             st.session_state.quiz_completed = False
                             st.session_state.answered_current = False
+                            st.session_state.last_quiz_topic = topic
                             st.rerun()
                         else:
                             st.error("Failed to generate quiz. The knowledge core may lack sufficient context on this topic, or the LLM failed to structure the response.")
@@ -94,6 +96,12 @@ def render():
                     st.session_state.answered_current = False
                 else:
                     st.session_state.quiz_completed = True
+                    # Track analytics
+                    track_quiz(
+                        topic=st.session_state.get('last_quiz_topic', 'General Quiz'),
+                        score=st.session_state.score,
+                        total=len(quiz)
+                    )
                 st.rerun()
                 
         st.markdown("</div>", unsafe_allow_html=True)
