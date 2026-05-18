@@ -21,26 +21,38 @@ Context Information:
 
 Student Question: {question}
 
+Dynamic Formatting Controls:
+- Explanation Complexity: {level}
+- Teaching Style: {style}
+- Output Length Constraint: Approximately {length} words.
+
 Rules:
 1. You must base your answer ONLY on the Context Information provided above.
 2. If the Context Information does not contain the answer, you must state: "I don't have enough context in the uploaded documents to answer this." Do not attempt to guess or use outside knowledge.
-3. Keep your answer clear, concise, and educational.
+3. Keep your answer clear, educational, and adhere to the Dynamic Formatting Controls.
 4. Do not mention "Based on the context" or "According to the provided text". Just provide the answer directly.
 
 Answer:
 """
 
-def generate_rag_response(query, max_retrieval_results=4):
+def generate_rag_response(query, max_retrieval_results=4, controls=None):
     """
     Executes the full RAG pipeline: retrieves relevant chunks and generates a grounded answer.
     
     Args:
         query (str): The user's question.
         max_retrieval_results (int): Number of chunks to retrieve.
+        controls (dict): Optional dict with 'level', 'length', and 'style' for dynamic prompting.
         
     Returns:
         dict: Contains 'answer' (str) and 'citations' (list of dicts).
     """
+    if controls is None:
+        controls = {
+            "level": "Intermediate",
+            "length": "Detailed Explanation",
+            "style": "Standard"
+        }
     try:
         # 1. Embed the query
         logger.info("Embedding user query...")
@@ -79,7 +91,13 @@ def generate_rag_response(query, max_retrieval_results=4):
         context_string = "\n\n".join(context_texts)
         
         # 4. Build Prompt
-        prompt = RAG_PROMPT_TEMPLATE.format(context=context_string, question=query)
+        prompt = RAG_PROMPT_TEMPLATE.format(
+            context=context_string, 
+            question=query,
+            level=controls.get('level', 'Intermediate'),
+            style=controls.get('style', 'Standard'),
+            length=controls.get('length', 'Detailed Explanation')
+        )
         
         # 5. Generate Answer via Ollama
         logger.info(f"Invoking Ollama with model {OLLAMA_MODEL}...")
