@@ -19,9 +19,20 @@ def render():
 
     # Configuration Panel (only show if no deck is active)
     if not st.session_state.flashcard_data:
+        # Polished Empty State Onboarding
+        st.markdown('''
+            <div style="text-align: center; margin-bottom: 30px;">
+                <div class="empty-state-icon">🗂️</div>
+                <h3 style="color: var(--text-main);">No Active Deck</h3>
+                <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">
+                    Synthesize a new deck of interactive flashcards based on your uploaded documents. Perfect for rapid active recall testing.
+                </p>
+            </div>
+        ''', unsafe_allow_html=True)
+        
         st.markdown("### Deck Configuration")
         with st.container():
-            st.markdown("<div class='cyber-card' style='padding: 20px; border-color: var(--neon-purple);'>", unsafe_allow_html=True)
+            st.markdown("<div class='cyber-card' style='padding: 30px; border-color: var(--neon-purple);'>", unsafe_allow_html=True)
             topic = st.text_input("Flashcard Topic / Concept", placeholder="e.g., Forward Pass vs Backward Pass")
             num_cards = st.slider("Number of Cards", min_value=3, max_value=15, value=5)
                 

@@ -1,13 +1,13 @@
 import streamlit as st
-from utils.styling import apply_theme
+from styles.theme import apply_premium_theme
 from services.analytics_service import init_analytics_state
 
 # Import component modules (we will create these next)
 from components import home, upload, tutor_chat_ui, diagram_ui, quiz_ui, flashcard_ui, analytics_dashboard, chunk_viewer, embedding_dashboard, vector_dashboard
 
 def main():
-    # Apply global theme and configuration
-    apply_theme()
+    # Apply global premium theme and configuration
+    apply_premium_theme()
     
     # Initialize analytics
     init_analytics_state()

@@ -23,9 +23,20 @@ def render():
         
     # Configuration Panel (only show if no quiz is active)
     if not st.session_state.quiz_data:
-        st.markdown("### Quiz Configuration")
+        # Polished Empty State Onboarding
+        st.markdown('''
+            <div style="text-align: center; margin-bottom: 30px;">
+                <div class="empty-state-icon">📝</div>
+                <h3 style="color: var(--text-main);">No Active Assessment</h3>
+                <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">
+                    Generate a new context-grounded quiz based on your uploaded knowledge base. Select a topic and difficulty to test your mastery.
+                </p>
+            </div>
+        ''', unsafe_allow_html=True)
+        
+        st.markdown("### Assessment Configuration")
         with st.container():
-            st.markdown("<div class='cyber-card' style='padding: 20px;'>", unsafe_allow_html=True)
+            st.markdown("<div class='cyber-card' style='padding: 30px;'>", unsafe_allow_html=True)
             topic = st.text_input("Quiz Topic / Focus Area", placeholder="e.g., Backpropagation")
             col1, col2 = st.columns(2)
             with col1:

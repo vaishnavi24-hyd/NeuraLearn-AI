@@ -91,10 +91,10 @@ def render():
                             similarity = max(0, 1.0 - citation.get('distance', 1.0))
                             st.markdown(f'''
                                 <div class="cyber-card" style="margin-bottom: 10px; padding: 10px; border-left: 3px solid var(--neon-cyan);">
-                                    <div style="font-size: 0.8rem; color: var(--neon-cyan); margin-bottom: 5px;">
+                                    <div style="font-size: 0.95rem; color: var(--neon-cyan); margin-bottom: 5px; font-weight: 600;">
                                         [Match {j+1}] Sim: {round(similarity * 100, 1)}% | Source: {citation['metadata'].get('filename')} | Page: {citation['metadata'].get('page_number')}
                                     </div>
-                                    <div style="font-size: 0.8rem; color: var(--text-muted); font-family: monospace;">
+                                    <div style="font-size: 1rem; color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.6;">
                                         {citation['document'][:300]}...
                                     </div>
                                 </div>
@@ -148,10 +148,10 @@ def render():
                             similarity = max(0, 1.0 - citation.get('distance', 1.0))
                             st.markdown(f'''
                                 <div class="cyber-card" style="margin-bottom: 10px; padding: 10px; border-left: 3px solid var(--neon-cyan);">
-                                    <div style="font-size: 0.8rem; color: var(--neon-cyan); margin-bottom: 5px;">
+                                    <div style="font-size: 0.95rem; color: var(--neon-cyan); margin-bottom: 5px; font-weight: 600;">
                                         [Match {j+1}] Sim: {round(similarity * 100, 1)}% | Source: {citation['metadata'].get('filename')} | Page: {citation['metadata'].get('page_number')}
                                     </div>
-                                    <div style="font-size: 0.8rem; color: var(--text-muted); font-family: monospace;">
+                                    <div style="font-size: 1rem; color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.6;">
                                         {citation['document'][:300]}...
                                     </div>
                                 </div>

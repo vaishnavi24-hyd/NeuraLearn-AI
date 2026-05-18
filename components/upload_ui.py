@@ -66,24 +66,37 @@ def render():
             st.markdown("<br>", unsafe_allow_html=True)
 
     else:
-        # Placeholder info if no files
+        # Premium Onboarding Empty State
+        st.markdown('''
+            <div style="text-align: center; margin-top: 40px; margin-bottom: 40px;">
+                <div class="empty-state-icon">📂</div>
+                <h3 style="color: var(--text-main);">Knowledge Core Offline</h3>
+                <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">
+                    Upload your first PDF document to initialize the neural pathways. The system will automatically chunk, embed, and index your data for high-speed semantic retrieval.
+                </p>
+            </div>
+        ''', unsafe_allow_html=True)
+        
         col1, col2 = st.columns(2)
         with col1:
             st.markdown('''
-                <div class="cyber-card">
+                <div class="cyber-card" style="text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">📄</div>
                     <div class="card-title">Supported Formats</div>
-                    <ul class="card-text">
-                        <li>PDF Documents (.pdf)</li>
-                    </ul>
+                    <p class="card-text">
+                        PDF Documents (.pdf)<br>
+                        Max file size: 200MB
+                    </p>
                 </div>
             ''', unsafe_allow_html=True)
         with col2:
             st.markdown('''
-                <div class="cyber-card">
+                <div class="cyber-card" style="text-align: center; border-color: var(--neon-purple);">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">⚡</div>
                     <div class="card-title">Processing Capacity</div>
-                    <ul class="card-text">
-                        <li>Concurrent parsing enabled</li>
-                        <li>High-fidelity OCR extraction</li>
-                    </ul>
+                    <p class="card-text">
+                        Concurrent parsing enabled<br>
+                        High-fidelity OCR extraction
+                    </p>
                 </div>
             ''', unsafe_allow_html=True)

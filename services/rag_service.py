@@ -35,13 +35,13 @@ Rules:
 Answer:
 """
 
-def generate_rag_response(query, max_retrieval_results=4, controls=None):
+def generate_rag_response(query, max_retrieval_results=8, controls=None):
     """
     Executes the full RAG pipeline: retrieves relevant chunks and generates a grounded answer.
     
     Args:
         query (str): The user's question.
-        max_retrieval_results (int): Number of chunks to retrieve.
+        max_retrieval_results (int): Number of chunks to retrieve (increased for deeper context).
         controls (dict): Optional dict with 'level', 'length', and 'style' for dynamic prompting.
         
     Returns:
@@ -72,8 +72,8 @@ def generate_rag_response(query, max_retrieval_results=4, controls=None):
             
         # Optional: Filter out weak retrievals based on distance. 
         # Chroma distance (cosine) ranges from 0 (perfect) to 2 (opposite).
-        # We can set a threshold, e.g., > 0.8 distance means very weak.
-        valid_chunks = [c for c in retrieved_chunks if c['distance'] < 0.8]
+        # We can set a threshold, e.g., > 0.9 distance means very weak.
+        valid_chunks = [c for c in retrieved_chunks if c['distance'] < 0.9]
         
         if not valid_chunks:
             return {
@@ -100,8 +100,8 @@ def generate_rag_response(query, max_retrieval_results=4, controls=None):
         )
         
         # 5. Generate Answer via Ollama
-        logger.info(f"Invoking Ollama with model {OLLAMA_MODEL}...")
-        llm = Ollama(model=OLLAMA_MODEL, temperature=0.1) # Low temp for precision
+        logger.info(f"Invoking Ollama with model {OLLAMA_MODEL} and extended context length...")
+        llm = Ollama(model=OLLAMA_MODEL, temperature=0.1, num_predict=2048) # Allow much longer detailed explanations
         
         answer = llm.invoke(prompt)
         

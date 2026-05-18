@@ -11,8 +11,16 @@ def render():
     st.markdown("---")
     
     # Check if analytics exist
-    if 'analytics' not in st.session_state:
-        st.warning("Analytics core is offline. Please restart the session or begin studying to initialize tracking.")
+    if 'analytics' not in st.session_state or st.session_state.analytics.get('total_questions_asked', 0) == 0 and st.session_state.analytics.get('quizzes_taken', 0) == 0 and st.session_state.analytics.get('flashcards_viewed', 0) == 0:
+        st.markdown('''
+            <div style="text-align: center; margin-top: 60px; margin-bottom: 60px;">
+                <div class="empty-state-icon">📊</div>
+                <h3 style="color: var(--text-main);">Telemetry Offline</h3>
+                <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">
+                    The analytics core is currently idle. Interact with the AI Tutor, complete a Quiz, or review Flashcards to begin generating real-time learning insights.
+                </p>
+            </div>
+        ''', unsafe_allow_html=True)
         return
         
     data = st.session_state.analytics
@@ -80,7 +88,7 @@ def render():
                 values='Interactions', 
                 names='Topic',
                 hole=0.4,
-                color_discrete_sequence=px.colors.sequential.Agalnita
+                color_discrete_sequence=["#00F5FF", "#C800FF", "#00FF85", "#FFB800"]
             )
             fig.update_layout(
                 paper_bgcolor="rgba(0,0,0,0)",
